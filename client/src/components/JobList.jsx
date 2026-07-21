@@ -1,4 +1,4 @@
-import JobCard from "./jobCard";
+import JobCard from "./JobCard";
 
 export default function JobList({ jobs }) {
   return (
