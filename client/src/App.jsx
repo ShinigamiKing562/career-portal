@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
-import Careers from "./pages/Careers";
-import JobDetails from "./pages/JobDetails";
+import Careers from "@/features/careers/pages/Careers";
+import JobDetails from "@/features/careers/pages/JobDetails";
 import Apply from "./pages/Apply";
 import Contact from "./pages/Contact";
 
@@ -21,4 +21,3 @@ function App() {
 }
 
 export default App;
-

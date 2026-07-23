@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getJobs } from "../services/jobsService";
-import JobList from "../components/JobList";
+import { getJobs } from "@/features/careers/services/jobsService";
+import JobList from "@/features/careers/components/JobList";
 
 export default function Careers() {
   const [jobs, setJobs] = useState([]);

@@ -1,4 +1,4 @@
-import JobCard from "./JobCard";
+import JobCard from "@/features/careers/components/JobCard";
 
 export default function JobList({ jobs }) {
   return (
