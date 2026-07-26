@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
-import { getJobs } from "@/features/careers/services/jobsService";
+
+import Layout from "@/layouts/layouts.jsx";
+
+import Hero from "@/features/careers/components/Hero";
 import JobList from "@/features/careers/components/JobList";
+import { getJobs } from "@/features/careers/services/jobsService";
 
 export default function Careers() {
   const [jobs, setJobs] = useState([]);
@@ -21,15 +25,17 @@ export default function Careers() {
     loadJobs();
   }, []);
 
-  if (loading) {
-    return <h2>Loading jobs...</h2>;
-  }
-
   return (
-    <div>
-      <h1>Careers</h1>
+    <Layout>
+      <Hero />
 
-      <JobList jobs={jobs} />
-    </div>
+      <section className="py-20">
+        <div className="mx-auto max-w-7xl px-6">
+          <h2 className="mb-8 text-4xl font-bold">Open Positions</h2>
+
+          {loading ? <p>Loading jobs...</p> : <JobList jobs={jobs} />}
+        </div>
+      </section>
+    </Layout>
   );
 }
