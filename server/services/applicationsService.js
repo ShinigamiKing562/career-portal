@@ -10,14 +10,25 @@ import {
   deleteApplication,
 } from "../models/applicationModel.js";
 
-import { getJobById } from "../models/jobModel.js";
+import { getJob } from "./jobsService.js";
 
 import ApiError from "../utils/ApiError.js";
 
+const ALLOWED_STATUS = [
+  "Submitted",
+  "Under Review",
+  "Interview",
+  "Offer",
+  "Rejected",
+  "Withdrawn",
+];
+
+// List applications
 export async function listApplications() {
   return getApplications();
 }
 
+// Get application
 export async function getApplication(id) {
   const application = await getApplicationById(id);
 
@@ -28,16 +39,14 @@ export async function getApplication(id) {
   return application;
 }
 
+// List applications for a job
 export async function listApplicationsByJob(jobId) {
   return getApplicationsByJob(jobId);
 }
 
+// Submit application
 export async function submitApplication(application) {
-  const job = await getJobById(application.jobId);
-
-  if (!job) {
-    throw new ApiError(HTTP_STATUS.NOT_FOUND, "Job not found");
-  }
+  const job = await getJob(application.jobId);
 
   if (job.status !== "Open") {
     throw new ApiError(
@@ -58,29 +67,23 @@ export async function submitApplication(application) {
     );
   }
 
-  const id = await createApplication(application);
-
-  return getApplicationById(id);
+  return createApplication(application);
 }
 
+// Update application status
 export async function changeApplicationStatus(id, status) {
-  const application = await getApplicationById(id);
+  const application = await getApplication(id);
 
-  if (!application) {
-    throw new ApiError(HTTP_STATUS.NOT_FOUND, "Application not found");
+  if (!ALLOWED_STATUS.includes(status)) {
+    throw new ApiError(HTTP_STATUS.BAD_REQUEST, "Invalid application status");
   }
 
-  await updateApplicationStatus(id, status);
-
-  return getApplicationById(id);
+  return updateApplicationStatus(id, status);
 }
 
+// Delete application
 export async function removeApplication(id) {
-  const application = await getApplicationById(id);
-
-  if (!application) {
-    throw new ApiError(HTTP_STATUS.NOT_FOUND, "Application not found");
-  }
+  await getApplication(id);
 
   await deleteApplication(id);
 }

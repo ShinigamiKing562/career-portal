@@ -18,7 +18,7 @@ export const listJobsController = asyncHandler(async (req, res) => {
   sendSuccess(res, result, "Jobs retrieved successfully");
 });
 
-// GET /api/jobs/:id
+// GET /api/jobs/:jobId
 export const getJobController = asyncHandler(async (req, res) => {
   const job = await getJob(req.params.jobId);
 
@@ -32,16 +32,16 @@ export const createJobController = asyncHandler(async (req, res) => {
   sendSuccess(res, job, "Job created successfully", HTTP_STATUS.CREATED);
 });
 
-// PATCH /api/jobs/:id
+// PATCH /api/jobs/:jobId
 export const updateJobController = asyncHandler(async (req, res) => {
   const job = await updateJob(req.params.jobId, req.body);
 
   sendSuccess(res, job, "Job updated successfully");
 });
 
-// DELETE /api/jobs/:id
+// DELETE /api/jobs/:jobId
 export const deleteJobController = asyncHandler(async (req, res) => {
   await deleteJob(req.params.jobId);
 
-  sendSuccess(res, null, "Job deleted successfully");
+  res.sendStatus(HTTP_STATUS.NO_CONTENT);
 });

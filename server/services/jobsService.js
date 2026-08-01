@@ -20,6 +20,42 @@ const ALLOWED_SORT_FIELDS = [
 
 const ALLOWED_ORDER = ["ASC", "DESC"];
 
+const ALLOWED_STATUS = ["Draft", "Open", "Closed", "Archived"];
+
+const ALLOWED_EMPLOYMENT_TYPES = [
+  "Full-time",
+  "Part-time",
+  "Contract",
+  "Internship",
+  "Temporary",
+  "Remote",
+];
+
+function validateStatus(status) {
+  if (status && !ALLOWED_STATUS.includes(status)) {
+    throw new ApiError(HTTP_STATUS.BAD_REQUEST, "Invalid job status");
+  }
+}
+
+function validateEmploymentType(employmentType) {
+  if (employmentType && !ALLOWED_EMPLOYMENT_TYPES.includes(employmentType)) {
+    throw new ApiError(HTTP_STATUS.BAD_REQUEST, "Invalid employment type");
+  }
+}
+
+function validateSalaryRange(salaryMin, salaryMax) {
+  if (
+    salaryMin != null &&
+    salaryMax != null &&
+    Number(salaryMin) > Number(salaryMax)
+  ) {
+    throw new ApiError(
+      HTTP_STATUS.BAD_REQUEST,
+      "Minimum salary cannot exceed maximum salary",
+    );
+  }
+}
+
 // List Jobs
 export async function listJobs(filters = {}) {
   let {
@@ -40,8 +76,9 @@ export async function listJobs(filters = {}) {
   sort = ALLOWED_SORT_FIELDS.includes(sort) ? sort : "created_at";
 
   order = order.toUpperCase();
-
   order = ALLOWED_ORDER.includes(order) ? order : "DESC";
+
+  validateStatus(status);
 
   return getAllJobs({
     page,
@@ -69,18 +106,22 @@ export async function getJob(id) {
 
 // Create Job
 export async function createJob(jobData) {
-  const id = await createJobModel(jobData);
+  validateStatus(jobData.status);
+  validateEmploymentType(jobData.employmentType);
+  validateSalaryRange(jobData.salaryMin, jobData.salaryMax);
 
-  return getJob(id);
+  return createJobModel(jobData);
 }
 
 // Update Job
 export async function updateJob(id, updates) {
   await getJob(id);
 
-  await updateJobModel(id, updates);
+  validateStatus(updates.status);
+  validateEmploymentType(updates.employmentType);
+  validateSalaryRange(updates.salaryMin, updates.salaryMax);
 
-  return getJob(id);
+  return updateJobModel(id, updates);
 }
 
 // Delete Job

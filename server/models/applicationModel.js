@@ -1,5 +1,21 @@
 import pool from "../config/db.js";
 
+function mapApplication(application) {
+  return {
+    id: application.id,
+    jobId: application.job_id,
+    firstName: application.first_name,
+    lastName: application.last_name,
+    email: application.email,
+    phone: application.phone,
+    coverLetter: application.cover_letter,
+    resumeFilename: application.resume_filename,
+    status: application.status,
+    createdAt: application.created_at,
+    updatedAt: application.updated_at,
+  };
+}
+
 // Read Operations
 
 export async function getApplications() {
@@ -9,7 +25,7 @@ export async function getApplications() {
     ORDER BY created_at DESC
   `);
 
-  return rows;
+  return rows.map(mapApplication);
 }
 
 export async function getApplicationById(id) {
@@ -23,7 +39,7 @@ export async function getApplicationById(id) {
     [id],
   );
 
-  return rows[0] ?? null;
+  return rows.length ? mapApplication(rows[0]) : null;
 }
 
 export async function getApplicationsByJob(jobId) {
@@ -37,7 +53,7 @@ export async function getApplicationsByJob(jobId) {
     [jobId],
   );
 
-  return rows;
+  return rows.map(mapApplication);
 }
 
 export async function getApplicationByJobAndEmail(jobId, email) {
@@ -52,14 +68,21 @@ export async function getApplicationByJobAndEmail(jobId, email) {
     [jobId, email],
   );
 
-  return rows[0] ?? null;
+  return rows.length ? mapApplication(rows[0]) : null;
 }
 
 // Create Operation
 
 export async function createApplication(application) {
-  const { jobId, firstName, lastName, email, phone, coverLetter, resumePath } =
-    application;
+  const {
+    jobId,
+    firstName,
+    lastName,
+    email,
+    phone,
+    coverLetter,
+    resumeFilename,
+  } = application;
 
   const [result] = await pool.query(
     `
@@ -70,29 +93,20 @@ export async function createApplication(application) {
         email,
         phone,
         cover_letter,
-        resume_path
+        resume_filename
       )
       VALUES (?, ?, ?, ?, ?, ?, ?)
     `,
-    [jobId, firstName, lastName, email, phone, coverLetter, resumePath],
+    [jobId, firstName, lastName, email, phone, coverLetter, resumeFilename],
   );
 
-  return {
-    id: result.insertId,
-    jobId,
-    firstName,
-    lastName,
-    email,
-    phone,
-    coverLetter,
-    resumePath,
-  };
+  return getApplicationById(result.insertId);
 }
 
 // Update Operation
 
 export async function updateApplicationStatus(id, status) {
-  const [result] = await pool.query(
+  await pool.query(
     `
       UPDATE applications
       SET status = ?
@@ -101,7 +115,7 @@ export async function updateApplicationStatus(id, status) {
     [status, id],
   );
 
-  return result.affectedRows;
+  return getApplicationById(id);
 }
 
 // Delete Operation

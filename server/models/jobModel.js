@@ -1,6 +1,26 @@
 import pool from "../config/db.js";
 
+function mapJob(job) {
+  return {
+    id: job.id,
+    title: job.title,
+    department: job.department,
+    location: job.location,
+    employmentType: job.employment_type,
+    description: job.description,
+    requirements: job.requirements,
+    salaryMin: job.salary_min,
+    salaryMax: job.salary_max,
+    currency: job.currency,
+    deadline: job.deadline,
+    status: job.status,
+    createdAt: job.created_at,
+    updatedAt: job.updated_at,
+  };
+}
+
 // Create Operation
+
 export async function createJob(job) {
   const {
     title,
@@ -9,9 +29,11 @@ export async function createJob(job) {
     employmentType,
     description,
     requirements,
-    salary,
+    salaryMin,
+    salaryMax,
+    currency = "KES",
     deadline,
-    status = "Open",
+    status = "Draft",
   } = job;
 
   const [result] = await pool.query(
@@ -23,11 +45,13 @@ export async function createJob(job) {
         employment_type,
         description,
         requirements,
-        salary,
+        salary_min,
+        salary_max,
+        currency,
         deadline,
         status
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `,
     [
       title,
@@ -36,13 +60,15 @@ export async function createJob(job) {
       employmentType,
       description,
       requirements,
-      salary,
+      salaryMin,
+      salaryMax,
+      currency,
       deadline,
       status,
     ],
   );
 
-  return result.insertId;
+  return getJobById(result.insertId);
 }
 
 // Read Operations
@@ -98,7 +124,7 @@ export async function getAllJobs({
     params.push(keyword, keyword, keyword);
   }
 
-  const whereClause = where.length > 0 ? `WHERE ${where.join(" AND ")}` : "";
+  const whereClause = where.length ? `WHERE ${where.join(" AND ")}` : "";
 
   const offset = (page - 1) * limit;
 
@@ -111,9 +137,7 @@ export async function getAllJobs({
     OFFSET ?
   `;
 
-  const jobsParams = [...params, limit, offset];
-
-  const [jobs] = await pool.query(jobsSql, jobsParams);
+  const [rows] = await pool.query(jobsSql, [...params, limit, offset]);
 
   const countSql = `
     SELECT COUNT(*) AS total
@@ -124,7 +148,7 @@ export async function getAllJobs({
   const [[{ total }]] = await pool.query(countSql, params);
 
   return {
-    jobs,
+    jobs: rows.map(mapJob),
     pagination: {
       page,
       limit,
@@ -145,10 +169,11 @@ export async function getJobById(id) {
     [id],
   );
 
-  return rows[0] ?? null;
+  return rows.length ? mapJob(rows[0]) : null;
 }
 
-//Update Operation
+// Update Operation
+
 export async function updateJob(id, updates) {
   const fields = [];
   const values = [];
@@ -160,7 +185,9 @@ export async function updateJob(id, updates) {
     employmentType: "employment_type",
     description: "description",
     requirements: "requirements",
-    salary: "salary",
+    salaryMin: "salary_min",
+    salaryMax: "salary_max",
+    currency: "currency",
     deadline: "deadline",
     status: "status",
   };
@@ -175,12 +202,12 @@ export async function updateJob(id, updates) {
   }
 
   if (fields.length === 0) {
-    return 0;
+    return getJobById(id);
   }
 
   values.push(id);
 
-  const [result] = await pool.query(
+  await pool.query(
     `
       UPDATE jobs
       SET ${fields.join(", ")}
@@ -189,10 +216,11 @@ export async function updateJob(id, updates) {
     values,
   );
 
-  return result.affectedRows;
+  return getJobById(id);
 }
 
 // Delete Operation
+
 export async function deleteJob(id) {
   const [result] = await pool.query(
     `
