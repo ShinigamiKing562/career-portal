@@ -1,14 +1,15 @@
-import { getAllJobs } from "../models/jobModel.js";
-import { sendSuccess, sendError } from "../utils/response.js";
+import asyncHandler from "../middleware/asyncHandler.js";
+import { getJobs, getJob } from "../services/jobsService.js";
+import { sendSuccess } from "../utils/response.js";
 
-export async function fetchJobs(req, res) {
-  try {
-    const jobs = await getAllJobs();
+export const fetchJobs = asyncHandler(async (req, res) => {
+  const result = await getJobs(req.query);
 
-    sendSuccess(res, jobs, "Jobs retrieved successfully");
-  } catch (error) {
-    console.error(error);
+  sendSuccess(res, result, "Jobs retrieved successfully");
+});
 
-    sendError(res, 500, "Failed to retrieve jobs");
-  }
-}
+export const fetchJob = asyncHandler(async (req, res) => {
+  const job = await getJob(req.params.id);
+
+  sendSuccess(res, job, "Job retrieved successfully");
+});
