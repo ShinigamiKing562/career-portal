@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 
 import pool from "./config/db.js";
 import jobsRoutes from "./routes/jobsRoutes.js";
+import applicationsRoutes from "./routes/applicationsRoutes.js";
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ try {
 }
 
 app.use("/api/jobs", jobsRoutes);
+app.use("/api/applications", applicationsRoutes);
 
 app.get("/", (req, res) => {
   res.json({
