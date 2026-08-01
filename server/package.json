@@ -24,6 +24,8 @@
     "lucide-react": "^1.25.0",
     "multer": "^2.2.0",
     "mysql2": "^3.23.0",
+    "swagger-jsdoc": "^6.3.0",
+    "swagger-ui-express": "^5.0.1",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
