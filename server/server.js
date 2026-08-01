@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import pool from "./config/db.js";
 import jobsRoutes from "./routes/jobsRoutes.js";
 import applicationsRoutes from "./routes/applicationsRoutes.js";
+import errorHandler from "./middleware/errorHandler.js";
 
 dotenv.config();
 
@@ -13,16 +14,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-try {
-  const connection = await pool.getConnection();
-  console.log("Connected to MySQL");
-  connection.release();
-} catch (err) {
-  console.error(err.message);
-}
 
 app.use("/api/jobs", jobsRoutes);
 app.use("/api/applications", applicationsRoutes);
+app.use(errorHandler);
 
 app.get("/", (req, res) => {
   res.json({

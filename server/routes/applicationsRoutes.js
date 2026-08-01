@@ -9,8 +9,8 @@ import {
 const router = express.Router();
 
 router.get("/", listApplicationsController);
-router.get("/:id", getApplicationController);
-router.patch("/:id/status", updateApplicationStatusController);
-router.delete("/:id", deleteApplicationController);
+router.get("/:applicationId", getApplicationController);
+router.patch("/:applicationId/status", updateApplicationStatusController);
+router.delete("/:applicationId", deleteApplicationController);
 
 export default router;

@@ -21,9 +21,13 @@ export const listApplicationsController = asyncHandler(async (req, res) => {
 
 // GET /api/applications/:id
 export const getApplicationController = asyncHandler(async (req, res) => {
-  const application = await getApplication(req.params.id);
+  const application = await getApplication(req.params.applicationId);
 
-  sendSuccess(res, application, "Application retrieved successfully");
+  sendSuccess(
+    res,
+    application,
+    "Application retrieved successfully",
+  );
 });
 
 // GET /api/jobs/:jobId/applications
@@ -37,7 +41,7 @@ export const listJobApplicationsController = asyncHandler(async (req, res) => {
 export const createApplicationController = asyncHandler(async (req, res) => {
   const application = await submitApplication({
     ...req.body,
-    jobId: req.params.id,
+    jobId: req.params.jobId,
   });
 
   sendSuccess(
@@ -48,11 +52,11 @@ export const createApplicationController = asyncHandler(async (req, res) => {
   );
 });
 
-// PATCH /api/applications/:id/status
+// PATCH /api/applications/:applicationId/status
 export const updateApplicationStatusController = asyncHandler(
   async (req, res) => {
     const application = await changeApplicationStatus(
-      req.params.id,
+      req.params.applicationId,
       req.body.status,
     );
 
@@ -60,9 +64,9 @@ export const updateApplicationStatusController = asyncHandler(
   },
 );
 
-// DELETE /api/applications/:id
+// DELETE /api/applications/:applicationId
 export const deleteApplicationController = asyncHandler(async (req, res) => {
-  await deleteApplication(req.params.id);
+  await deleteApplication(req.params.applicationId);
 
   res.sendStatus(HTTP_STATUS.NO_CONTENT);
 });
