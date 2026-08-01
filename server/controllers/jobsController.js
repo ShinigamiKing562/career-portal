@@ -20,7 +20,7 @@ export const listJobsController = asyncHandler(async (req, res) => {
 
 // GET /api/jobs/:id
 export const getJobController = asyncHandler(async (req, res) => {
-  const job = await getJob(req.params.id);
+  const job = await getJob(req.params.jobId);
 
   sendSuccess(res, job, "Job retrieved successfully");
 });
@@ -34,14 +34,14 @@ export const createJobController = asyncHandler(async (req, res) => {
 
 // PATCH /api/jobs/:id
 export const updateJobController = asyncHandler(async (req, res) => {
-  const job = await updateJob(req.params.id, req.body);
+  const job = await updateJob(req.params.jobId, req.body);
 
   sendSuccess(res, job, "Job updated successfully");
 });
 
 // DELETE /api/jobs/:id
 export const deleteJobController = asyncHandler(async (req, res) => {
-  await deleteJob(req.params.id);
+  await deleteJob(req.params.jobId);
 
   sendSuccess(res, null, "Job deleted successfully");
 });

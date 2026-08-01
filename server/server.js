@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import path from "path";
 
 import pool from "./config/db.js";
 import jobsRoutes from "./routes/jobsRoutes.js";
@@ -13,10 +14,11 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/jobs", jobsRoutes);
 app.use("/api/applications", applicationsRoutes);
+app.use("/uploads", express.static(path.resolve("uploads")));
 app.use(errorHandler);
 
 app.get("/", (req, res) => {

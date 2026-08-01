@@ -33,3 +33,7 @@ lerna-debug.log*
 
 # OS
 Thumbs.db
+
+#Uploads
+uploads/
+

@@ -1,4 +1,5 @@
 import express from "express";
+import upload from "../middleware/upload.js";
 import {
   listJobsController,
   getJobController,
@@ -21,6 +22,10 @@ router.delete("/:jobId", deleteJobController);
 
 // Nested application routes
 router.get("/:jobId/applications", listJobApplicationsController);
-router.post("/:jobId/applications", createApplicationController);
+router.post(
+  "/:jobId/applications",
+  upload.single("resume"),
+  createApplicationController,
+);
 
 export default router;

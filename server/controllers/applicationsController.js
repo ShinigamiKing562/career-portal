@@ -42,6 +42,7 @@ export const createApplicationController = asyncHandler(async (req, res) => {
   const application = await submitApplication({
     ...req.body,
     jobId: req.params.jobId,
+    resumePath: req.file?.filename ?? null,
   });
 
   sendSuccess(

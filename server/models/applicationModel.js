@@ -77,7 +77,16 @@ export async function createApplication(application) {
     [jobId, firstName, lastName, email, phone, coverLetter, resumePath],
   );
 
-  return result.insertId;
+  return {
+    id: result.insertId,
+    jobId,
+    firstName,
+    lastName,
+    email,
+    phone,
+    coverLetter,
+    resumePath,
+  };
 }
 
 // Update Operation
