@@ -3,6 +3,7 @@ import swaggerJsdoc from "swagger-jsdoc";
 const options = {
   definition: {
     openapi: "3.1.0",
+
     info: {
       title: "Career Portal API",
       version: "1.0.0",
@@ -71,30 +72,90 @@ const options = {
             },
             description: {
               type: "string",
+              example: "Develop and maintain REST APIs.",
             },
             requirements: {
               type: "string",
+              example: "Node.js, Express.js, MySQL",
             },
-            salaryMin: {
-              type: "number",
-              example: 150000,
-            },
-            salaryMax: {
-              type: "number",
-              example: 250000,
-            },
-            currency: {
+            salary: {
               type: "string",
-              example: "KES",
+              example: "KES 150,000",
             },
             deadline: {
               type: "string",
               format: "date",
+              example: "2026-12-31",
             },
             status: {
               type: "string",
-              enum: ["Draft", "Open", "Closed", "Archived"],
+              enum: ["Open", "Closed"],
               example: "Open",
+            },
+            createdAt: {
+              type: "string",
+              format: "date-time",
+            },
+            updatedAt: {
+              type: "string",
+              format: "date-time",
+            },
+          },
+        },
+
+        Application: {
+          type: "object",
+          required: ["firstName", "lastName", "email"],
+          properties: {
+            id: {
+              type: "integer",
+              example: 1,
+            },
+            jobId: {
+              type: "integer",
+              example: 4,
+            },
+            firstName: {
+              type: "string",
+              example: "Victor",
+            },
+            lastName: {
+              type: "string",
+              example: "Kamau",
+            },
+            email: {
+              type: "string",
+              format: "email",
+              example: "victor@example.com",
+            },
+            phone: {
+              type: "string",
+              example: "0712345678",
+            },
+            coverLetter: {
+              type: "string",
+              example: "I am interested in this position.",
+            },
+            resume: {
+              type: "string",
+              format: "binary",
+              description: "Resume file uploaded by the applicant.",
+            },
+            resumeFilename: {
+              type: "string",
+              example: "1722693748291-resume.pdf",
+              description: "Filename stored on the server.",
+            },
+            status: {
+              type: "string",
+              enum: [
+                "Submitted",
+                "Under Review",
+                "Shortlisted",
+                "Rejected",
+                "Accepted",
+              ],
+              example: "Submitted",
             },
             createdAt: {
               type: "string",
@@ -138,6 +199,7 @@ const options = {
             },
             message: {
               type: "string",
+              example: "Operation completed successfully.",
             },
           },
         },
