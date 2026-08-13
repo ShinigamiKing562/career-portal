@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api/jobs", jobsRoutes);
 app.use("/api/applications", applicationsRoutes);
-app.use("/uploads", express.static(path.resolve("uploads")));
+// app.use("/uploads", express.static(path.resolve("uploads")));
 app.use(errorHandler);
 
 app.get("/", (req, res) => {

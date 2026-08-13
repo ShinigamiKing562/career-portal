@@ -1,5 +1,11 @@
 import express from "express";
 import upload from "../middleware/upload.js";
+import validate from "../middleware/validate.js";
+import {
+  createJobValidation,
+  updateJobValidation,
+} from "../validators/jobValidator.js";
+import { createApplicationValidation, requireResume } from "../validators/applicationValidator.js";
 import {
   listJobsController,
   getJobController,
@@ -16,8 +22,8 @@ const router = express.Router();
 
 router.get("/", listJobsController);
 router.get("/:jobId", getJobController);
-router.post("/", createJobController);
-router.patch("/:jobId", updateJobController);
+router.post("/", createJobValidation, validate, createJobController);
+router.patch("/:jobId", updateJobValidation, validate, updateJobController);
 router.delete("/:jobId", deleteJobController);
 
 // Nested application routes
@@ -25,6 +31,9 @@ router.get("/:jobId/applications", listJobApplicationsController);
 router.post(
   "/:jobId/applications",
   upload.single("resume"),
+  createApplicationValidation,
+  validate,
+  requireResume,
   createApplicationController,
 );
 
