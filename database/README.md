@@ -11,6 +11,7 @@ SOURCE schema/01_create_database.sql;
 ```sql
 SOURCE schema/02_jobs.sql;
 SOURCE schema/03_applications.sql;
+SOURCE schema/04_users.sql;
 ```
 
 ## Seed data
@@ -18,6 +19,7 @@ SOURCE schema/03_applications.sql;
 ```sql
 SOURCE seeds/jobs.sql;
 SOURCE seeds/applications.sql;
+SOURCE seeds/users.sql;
 ```
 
 ## Reset everything
