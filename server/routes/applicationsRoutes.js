@@ -1,4 +1,6 @@
 import express from "express";
+import authenticate from "../middleware/authenticate.js";
+import authorize from "../middleware/authorize.js";
 import {
   listApplicationsController,
   getApplicationController,
@@ -7,6 +9,9 @@ import {
 } from "../controllers/applicationsController.js";
 
 const router = express.Router();
+
+router.use(authenticate);
+router.use(authorize("admin"));
 
 router.get("/", listApplicationsController);
 router.get("/:applicationId", getApplicationController);

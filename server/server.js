@@ -8,6 +8,7 @@ import swaggerSpec from "./config/swagger.js";
 import pool from "./config/db.js";
 import jobsRoutes from "./routes/jobsRoutes.js";
 import applicationsRoutes from "./routes/applicationsRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 import errorHandler from "./middleware/errorHandler.js";
 
 dotenv.config();
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/api/auth", authRoutes);
 app.use("/api/jobs", jobsRoutes);
 app.use("/api/applications", applicationsRoutes);
 // app.use("/uploads", express.static(path.resolve("uploads")));
