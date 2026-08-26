@@ -202,6 +202,7 @@ export async function updateJob(id, updates) {
     requirements: "requirements",
     salary: "salary",
     currency: "currency",
+    imagePath: "image_path",
     deadline: "deadline",
     status: "status",
   };
