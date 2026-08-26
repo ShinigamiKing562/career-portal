@@ -16,7 +16,7 @@ CREATE TABLE applications (
 
     cover_letter TEXT NOT NULL,
 
-    resume_filename VARCHAR(255),
+    resume_filename VARCHAR(255) NOT NULL,
 
     status ENUM(
         'Pending',
