@@ -1,5 +1,6 @@
 import express from "express";
-import upload from "../middleware/upload.js";
+import resumeUpload from "../middleware/resumeUpload.js";
+import jobImageUpload from "../middleware/jobImageUpload.js";
 import validate from "../middleware/validate.js";
 import authenticate from "../middleware/authenticate.js";
 import authorize from "../middleware/authorize.js";
@@ -26,6 +27,7 @@ router.get("/", listJobsController);
 router.get("/:jobId", getJobController);
 router.post(
   "/",
+  jobImageUpload.single('image'),
   authenticate,
   authorize("admin"),
   createJobValidation,
@@ -35,6 +37,7 @@ router.post(
 
 router.patch(
   "/:jobId",
+  jobImageUpload.single('image'),
   authenticate,
   authorize("admin"),
   updateJobValidation,
@@ -56,7 +59,7 @@ router.get(
 // Public: submit an application
 router.post(
   "/:jobId/applications",
-  upload.single("resume"),
+  resumeUpload.single("resume"),
   createApplicationValidation,
   validate,
   requireResume,

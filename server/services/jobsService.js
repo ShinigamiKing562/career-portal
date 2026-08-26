@@ -43,18 +43,6 @@ function validateEmploymentType(employmentType) {
   }
 }
 
-function validateSalaryRange(salaryMin, salaryMax) {
-  if (
-    salaryMin != null &&
-    salaryMax != null &&
-    Number(salaryMin) > Number(salaryMax)
-  ) {
-    throw new ApiError(
-      HTTP_STATUS.BAD_REQUEST,
-      "Minimum salary cannot exceed maximum salary",
-    );
-  }
-}
 
 // List Jobs
 export async function listJobs(filters = {}) {
@@ -108,7 +96,6 @@ export async function getJob(id) {
 export async function createJob(jobData) {
   validateStatus(jobData.status);
   validateEmploymentType(jobData.employmentType);
-  validateSalaryRange(jobData.salaryMin, jobData.salaryMax);
 
   return createJobModel(jobData);
 }
@@ -119,7 +106,6 @@ export async function updateJob(id, updates) {
 
   validateStatus(updates.status);
   validateEmploymentType(updates.employmentType);
-  validateSalaryRange(updates.salaryMin, updates.salaryMax);
 
   return updateJobModel(id, updates);
 }

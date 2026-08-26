@@ -36,7 +36,7 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-const upload = multer({
+const resumeUpload = multer({
   storage,
   fileFilter,
   limits: {
@@ -44,4 +44,4 @@ const upload = multer({
   },
 });
 
-export default upload;
+export default resumeUpload;
