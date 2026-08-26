@@ -23,12 +23,23 @@ const ALLOWED_STATUS = [
   "Withdrawn",
 ];
 
-// List applications
+const formatApplication = (application) => {
+  if (!application) return null;
+
+  return {
+    ...application,
+    resumeUrl: application.resumeFilename
+      ? `/uploads/resumes/${application.resumeFilename}`
+      : null,
+  };
+};
+
 export async function listApplications() {
-  return getApplications();
+  const applications = await getApplications();
+
+  return applications.map(formatApplication);
 }
 
-// Get application
 export async function getApplication(id) {
   const application = await getApplicationById(id);
 
@@ -36,15 +47,15 @@ export async function getApplication(id) {
     throw new ApiError(HTTP_STATUS.NOT_FOUND, "Application not found");
   }
 
-  return application;
+  return formatApplication(application);
 }
 
-// List applications for a job
 export async function listApplicationsByJob(jobId) {
-  return getApplicationsByJob(jobId);
+  const applications = await getApplicationsByJob(jobId);
+
+  return applications.map(formatApplication);
 }
 
-// Submit application
 export async function submitApplication(application) {
   const job = await getJob(application.jobId);
 
@@ -72,10 +83,10 @@ export async function submitApplication(application) {
   }
 
   const id = await createApplication(application);
-  return getApplicationById(id);
+
+  return getApplication(id);
 }
 
-// Update application status
 export async function changeApplicationStatus(id, status) {
   const application = await getApplication(id);
 
@@ -86,7 +97,6 @@ export async function changeApplicationStatus(id, status) {
   return updateApplicationStatus(id, status);
 }
 
-// Delete application
 export async function removeApplication(id) {
   await getApplication(id);
 
