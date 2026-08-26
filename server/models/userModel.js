@@ -19,12 +19,12 @@ export async function getUserById(id) {
     `
       SELECT
         id,
-        first_name,
-        last_name,
+        first_name AS firstName,
+        last_name AS lastName,
         email,
         role,
-        created_at,
-        updated_at
+        created_at AS createdAt,
+        updated_at AS updatedAt
       FROM users
       WHERE id = ?
       LIMIT 1
