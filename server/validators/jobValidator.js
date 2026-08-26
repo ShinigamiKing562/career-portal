@@ -48,7 +48,7 @@ export const createJobValidation = [
     .trim()
     .isLength({ max: 50 })
     .withMessage("Salary must not exceed 50 characters"),
-  
+
   body("currency")
     .optional()
     .trim()
@@ -56,7 +56,6 @@ export const createJobValidation = [
     .withMessage("Currency must not exceed 10 characters"),
   
   body("image")
-    .optional()
     .custom((value, { req }) => {
       if (!req.file) {
         throw new Error("Image is required");
@@ -132,13 +131,7 @@ export const updateJobValidation = [
     .withMessage("Currency must not exceed 10 characters"),
   
   body("image")
-    .optional()
-    .custom((value, { req }) => {
-      if (!req.file) {
-        throw new Error("Image is required");
-      }
-      return true;
-    }),
+    .optional(),
 
   body("deadline")
     .optional()
@@ -147,6 +140,6 @@ export const updateJobValidation = [
 
   body("status")
     .optional()
-    .isIn(["Open", "Closed"])
-    .withMessage("Status must be either Open or Closed"),
+    .isIn(["Open", "Closed", "Draft", "Archived"])
+    .withMessage("Invalid status option"),
 ];
