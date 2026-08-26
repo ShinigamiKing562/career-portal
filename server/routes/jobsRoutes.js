@@ -11,6 +11,7 @@ import {
 import { createApplicationValidation, requireResume } from "../validators/applicationValidator.js";
 import {
   listJobsController,
+  getJobByTitleController,
   getJobController,
   createJobController,
   updateJobController,
@@ -24,6 +25,7 @@ import {
 const router = express.Router();
 
 router.get("/", listJobsController);
+router.get("/title/:title", getJobByTitleController);
 router.get("/:jobId", getJobController);
 router.post(
   "/",

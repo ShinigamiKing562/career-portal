@@ -3,6 +3,7 @@ import { HTTP_STATUS } from "../constants/httpStatus.js";
 
 import {
   listJobs,
+  getJobByTitle,
   getJob,
   createJob,
   updateJob,
@@ -15,6 +16,14 @@ import { sendSuccess } from "../utils/response.js";
 export const listJobsController = asyncHandler(async (req, res) => {
   const result = await listJobs(req.query);
 
+  sendSuccess(res, result, "Jobs retrieved successfully");
+});
+
+// GET /api/jobs/title/:title
+export const getJobByTitleController = asyncHandler(async (req, res) => {
+  const { title } = req.params;
+  const result = await getJobByTitle(title);
+  
   sendSuccess(res, result, "Jobs retrieved successfully");
 });
 

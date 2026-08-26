@@ -1,3 +1,4 @@
+import e from "express";
 import pool from "../config/db.js";
 
 function mapJob(job) {
@@ -156,6 +157,20 @@ export async function getAllJobs({
       totalPages: Math.ceil(total / limit),
     },
   };
+}
+
+export async function getJobByItsTitle(title) {
+  const [rows] = await pool.query(
+    `
+      SELECT *
+      FROM jobs
+      WHERE title = ?
+      LIMIT 1
+    `,
+    [title],
+  );
+
+  return rows.length ? mapJob(rows[0]) : null;
 }
 
 export async function getJobById(id) {

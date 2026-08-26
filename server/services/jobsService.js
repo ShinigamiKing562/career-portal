@@ -1,7 +1,9 @@
+import e from "express";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
 
 import {
   getAllJobs,
+  getJobByItsTitle,
   getJobById,
   createJob as createJobModel,
   updateJob as updateJobModel,
@@ -82,6 +84,16 @@ export async function listJobs(filters = {}) {
 }
 
 // Get Job
+export async function getJobByTitle(title) {
+  const job = await getJobByItsTitle(title);
+
+  if (!job) {
+    throw new ApiError(HTTP_STATUS.NOT_FOUND, "Job not found");
+  }
+
+  return job;
+}
+
 export async function getJob(id) {
   const job = await getJobById(id);
 
