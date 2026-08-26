@@ -48,6 +48,10 @@ export async function listApplicationsByJob(jobId) {
 export async function submitApplication(application) {
   const job = await getJob(application.jobId);
 
+  if (!job) {
+    throw new ApiError(HTTP_STATUS.NOT_FOUND, "Job not found");
+  }
+
   if (job.status !== "Open") {
     throw new ApiError(
       HTTP_STATUS.BAD_REQUEST,
@@ -67,7 +71,8 @@ export async function submitApplication(application) {
     );
   }
 
-  return createApplication(application);
+  const id = await createApplication(application);
+  return getApplicationById(id);
 }
 
 // Update application status

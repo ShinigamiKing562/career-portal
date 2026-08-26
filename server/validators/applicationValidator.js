@@ -32,6 +32,56 @@ export const createApplicationValidation = [
     .matches(/^[+0-9\s()-]+$/)
     .withMessage("Invalid phone number"),
 
+  body("nationalId")
+    .trim()
+    .notEmpty()
+    .withMessage("National ID is required")
+    .isLength({ max: 50 })
+    .withMessage("National ID must not exceed 50 characters"),
+
+  body("skills")
+    .notEmpty()
+    .withMessage("Skills are required")
+    .custom((value) => {
+      try {
+        const parsed = typeof value === "string" ? JSON.parse(value) : value;
+
+        if (!Array.isArray(parsed)) {
+          throw new Error("Skills must be an array");
+        }
+
+        if (parsed.length === 0) {
+          throw new Error("At least one skill is required");
+        }
+
+        return true;
+      } catch (error) {
+        throw new Error("Skills must be a valid JSON array");
+      }
+    })
+    .customSanitizer((value) => {
+      return typeof value === "string" ? JSON.parse(value) : value;
+    }),
+
+  body("supportingLinks")
+    .optional({ checkFalsy: true })
+    .custom((value) => {
+      try {
+        const parsed = typeof value === "string" ? JSON.parse(value) : value;
+
+        if (!Array.isArray(parsed)) {
+          throw new Error("Supporting links must be an array");
+        }
+
+        return true;
+      } catch (error) {
+        throw new Error("Supporting links must be a valid JSON array");
+      }
+    })
+    .customSanitizer((value) => {
+      return typeof value === "string" ? JSON.parse(value) : value;
+    }),
+
   body("coverLetter")
     .trim()
     .notEmpty()

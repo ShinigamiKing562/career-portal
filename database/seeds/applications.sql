@@ -4,6 +4,9 @@ INSERT INTO applications (
     last_name,
     email,
     phone,
+    national_id,
+    skills,
+    supporting_links,
     cover_letter,
     resume_filename,
     status
@@ -15,9 +18,12 @@ VALUES
     'Kamau',
     'victor@example.com',
     '0712345678',
+    '12345678',
+    '["JavaScript", "Node.js", "Express"]',
+    '{"portfolio": "https://victor-portfolio.com", "github": "https://github.com/victor-kamau"}',
     'I am interested in the Backend Developer role.',
     'victor-kamau.pdf',
-    'Submitted'
+    'Pending'
 ),
 (
     1,
@@ -25,9 +31,12 @@ VALUES
     'Mwangi',
     'jane@example.com',
     '0723456789',
+    '87654321',
+    '["Python", "Django", "REST APIs"]',
+    '{"portfolio": "https://jane-portfolio.com", "github": "https://github.com/jane-mwangi"}',
     'I have three years of backend experience.',
     'jane-mwangi.pdf',
-    'Under Review'
+    'Reviewed'
 ),
 (
     2,
@@ -35,7 +44,10 @@ VALUES
     'Otieno',
     'john@example.com',
     '0734567890',
+    '11223344',
+    '["React", "Redux", "TypeScript"]',
+    '{"portfolio": "https://john-portfolio.com", "github": "https://github.com/john-otieno"}',
     'React developer with five years of experience.',
     'john-otieno.pdf',
-    'Interview'
+    'Shortlisted'
 );

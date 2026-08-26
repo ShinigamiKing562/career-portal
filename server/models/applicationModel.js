@@ -8,6 +8,9 @@ function mapApplication(application) {
     lastName: application.last_name,
     email: application.email,
     phone: application.phone,
+    nationalId: application.national_id,
+    skills: application.skills,
+    supportingLinks: application.supporting_links,
     coverLetter: application.cover_letter,
     resumeFilename: application.resume_filename,
     status: application.status,
@@ -80,6 +83,9 @@ export async function createApplication(application) {
     lastName,
     email,
     phone,
+    nationalId,
+    skills,
+    supportingLinks,
     coverLetter,
     resumeFilename,
   } = application;
@@ -92,12 +98,26 @@ export async function createApplication(application) {
         last_name,
         email,
         phone,
+        national_id,
+        skills,
+        supporting_links,
         cover_letter,
         resume_filename
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `,
-    [jobId, firstName, lastName, email, phone, coverLetter, resumeFilename],
+    [
+      jobId,
+      firstName,
+      lastName,
+      email,
+      phone,
+      nationalId,
+      JSON.stringify(skills),
+      supportingLinks ? JSON.stringify(supportingLinks) : null,
+      coverLetter,
+      resumeFilename,
+    ],
   );
 
   return getApplicationById(result.insertId);
