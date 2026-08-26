@@ -17,10 +17,10 @@ CREATE TABLE jobs (
     description TEXT NOT NULL,
     requirements TEXT NOT NULL,
 
-    salary DECIMAL(10,2),
-    currency CHAR(3) DEFAULT 'KES',
+    salary DECIMAL(10,2) NOT NULL,
+    currency CHAR(3) DEFAULT 'KES' NOT NULL,
 
-    image_path VARCHAR(255) NULL,
+    image_path VARCHAR(255) NOT NULL,
 
     deadline DATE NOT NULL,
 

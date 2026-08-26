@@ -1,4 +1,3 @@
-import e from "express";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
 
 import {
@@ -32,6 +31,15 @@ const ALLOWED_EMPLOYMENT_TYPES = [
   "Temporary",
   "Remote",
 ];
+
+const formatJob = (job) => {
+  if (!job) return null;
+
+  return {
+    ...job,
+    imageUrl: job.imagePath ? `/uploads/job_pictures/${job.imagePath}` : null,
+  };
+};
 
 function validateStatus(status) {
   if (status && !ALLOWED_STATUS.includes(status)) {
@@ -91,7 +99,7 @@ export async function getJobByTitle(title) {
     throw new ApiError(HTTP_STATUS.NOT_FOUND, "Job not found");
   }
 
-  return job;
+  return formatJob(job);
 }
 
 export async function getJob(id) {
@@ -101,7 +109,7 @@ export async function getJob(id) {
     throw new ApiError(HTTP_STATUS.NOT_FOUND, "Job not found");
   }
 
-  return job;
+  return formatJob(job);
 }
 
 // Create Job
@@ -109,7 +117,9 @@ export async function createJob(jobData) {
   validateStatus(jobData.status);
   validateEmploymentType(jobData.employmentType);
 
-  return createJobModel(jobData);
+  const job = await createJobModel(jobData);
+
+  return formatJob(job);
 }
 
 // Update Job
