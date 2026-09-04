@@ -16,6 +16,7 @@ CREATE TABLE jobs (
 
     description TEXT NOT NULL,
     requirements TEXT NOT NULL,
+    responsibilities TEXT NOT NULL,
 
     salary DECIMAL(10,2) NOT NULL,
     currency CHAR(3) DEFAULT 'KES' NOT NULL,
