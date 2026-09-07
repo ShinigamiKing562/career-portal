@@ -42,6 +42,11 @@ export const createJobValidation = [
     .trim()
     .notEmpty()
     .withMessage("Requirements are required"),
+  
+  body("responsibilities")
+    .trim()
+    .notEmpty()
+    .withMessage("Responsibilities are required"),
 
   body("salary")
     .optional()
@@ -117,6 +122,12 @@ export const updateJobValidation = [
     .trim()
     .notEmpty()
     .withMessage("Requirements cannot be empty"),
+  
+  body("responsibilities")
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage("Responsibilities cannot be empty"),
 
   body("salary")
     .optional()
