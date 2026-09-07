@@ -10,6 +10,7 @@ function mapJob(job) {
     employmentType: job.employment_type,
     description: job.description,
     requirements: job.requirements,
+    responsibilities: job.responsibilities,
     salary: job.salary,
     currency: job.currency,
     imagePath: job.image_path,
@@ -30,6 +31,7 @@ export async function createJob(job) {
     employmentType,
     description,
     requirements,
+    responsibilities,
     salary,
     currency = "KES",
     imagePath,
@@ -46,13 +48,14 @@ export async function createJob(job) {
         employment_type,
         description,
         requirements,
+        responsibilities,
         salary,
         currency,
         image_path,
         deadline,
         status
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `,
     [
       title,
@@ -61,6 +64,7 @@ export async function createJob(job) {
       employmentType,
       description,
       requirements,
+      responsibilities,
       salary,
       currency,
       imagePath,
@@ -200,6 +204,7 @@ export async function updateJob(id, updates) {
     employmentType: "employment_type",
     description: "description",
     requirements: "requirements",
+    responsibilities: "responsibilities",
     salary: "salary",
     currency: "currency",
     imagePath: "image_path",
