@@ -39,6 +39,20 @@ export const createApplicationValidation = [
     .isLength({ max: 50 })
     .withMessage("National ID must not exceed 50 characters"),
 
+  body("gender")
+    .trim()
+    .notEmpty()
+    .withMessage("Gender is required")
+    .isIn(["Male", "Female", "Other"])
+    .withMessage("Invalid gender option"),
+  
+  body("location")
+    .trim()
+    .notEmpty()
+    .withMessage("Location is required")
+    .isLength({ max: 100 })
+    .withMessage("Location must not exceed 100 characters"), 
+
   body("skills")
     .notEmpty()
     .withMessage("Skills are required")
@@ -62,6 +76,64 @@ export const createApplicationValidation = [
     .customSanitizer((value) => {
       return typeof value === "string" ? JSON.parse(value) : value;
     }),
+  
+  body("previousPosition")
+    .trim()
+    .notEmpty()
+    .withMessage("Previous position is required")
+    .isLength({ max: 100 })
+    .withMessage("Previous position must not exceed 100 characters"),
+
+  body("previousWorkplace")
+    .trim()
+    .notEmpty()
+    .withMessage("Previous workplace is required")
+    .isLength({ max: 100 })
+    .withMessage("Previous workplace must not exceed 100 characters"),
+
+  body("yearsOfExperience")
+    .notEmpty()
+    .withMessage("Years of experience is required")
+    .isInt({ min: 0, max: 100 })
+    .withMessage("Years of experience must be a valid number between 0 and 100"),
+
+  body("positionDescription")
+    .trim()
+    .notEmpty()
+    .withMessage("Position description is required")
+    .isLength({ max: 500 })
+    .withMessage("Position description must not exceed 500 characters"),
+
+  body("highestEducation")
+    .trim()
+    .notEmpty()
+    .withMessage("Highest education is required")
+    .isLength({ max: 100 })
+    .withMessage("Highest education must not exceed 100 characters"),
+
+  body("major")
+    .trim()
+    .notEmpty()
+    .withMessage("Major is required")
+    .isLength({ max: 100 })
+    .withMessage("Major must not exceed 100 characters"),
+
+  body("educationInstitution")
+    .trim()
+    .notEmpty()
+    .withMessage("Education institution is required")
+    .isLength({ max: 100 })
+    .withMessage("Education institution must not exceed 100 characters"),
+
+  body("graduationYear")
+    .notEmpty()
+    .withMessage("Graduation year is required")
+    .isInt({ min: 1900, max: new Date().getFullYear() + 10 })
+    .withMessage(
+      `Graduation year must be a valid year between 1900 and ${
+        new Date().getFullYear() + 10
+      }`,
+    ),
 
   body("supportingLinks")
     .optional({ checkFalsy: true })

@@ -88,7 +88,7 @@ export async function submitApplication(application) {
 }
 
 export async function changeApplicationStatus(id, status) {
-  const application = await getApplication(id);
+  await getApplication(id);
 
   if (!ALLOWED_STATUS.includes(status)) {
     throw new ApiError(HTTP_STATUS.BAD_REQUEST, "Invalid application status");
