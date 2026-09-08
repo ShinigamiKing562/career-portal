@@ -66,7 +66,7 @@ VALUES
     '{"portfolio": "https://jane-portfolio.com", "github": "https://github.com/jane-mwangi"}',
     'I have three years of backend experience.',
     'jane-mwangi.pdf',
-    'Reviewed'
+    'Reviewing'
 ),
 (
     2,
@@ -89,5 +89,5 @@ VALUES
     '{"portfolio": "https://john-portfolio.com", "github": "https://github.com/john-otieno"}',
     'I am a React developer with five years of experience.',
     'john-otieno.pdf',
-    'Shortlisted'
+    'Accepted'
 );

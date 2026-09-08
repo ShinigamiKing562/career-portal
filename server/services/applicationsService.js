@@ -15,12 +15,11 @@ import { getJob } from "./jobsService.js";
 import ApiError from "../utils/ApiError.js";
 
 const ALLOWED_STATUS = [
-  "Submitted",
-  "Under Review",
+  "Pending",
+  "Reviewing",
   "Interview",
-  "Offer",
-  "Rejected",
-  "Withdrawn",
+  "Accepted",
+  "Rejected"
 ];
 
 const formatApplication = (application) => {

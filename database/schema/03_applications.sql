@@ -40,8 +40,9 @@ CREATE TABLE applications (
 
     status ENUM(
         'Pending',
-        'Reviewed',
-        'Shortlisted',
+        'Reviewing',
+        'Interview',
+        'Accepted',
         'Rejected'
     ) NOT NULL DEFAULT 'Pending',
 
