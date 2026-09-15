@@ -51,7 +51,6 @@ VALUES
     'Design and implement intuitive user experiences, collaborate with developers, and ensure usability.',
     90000,
     'KES',
-    'ui_ux_designer.jpg',
     '2026-10-15',
     'Open'
 ),
@@ -65,7 +64,6 @@ VALUES
     'Manage recruitment processes, conduct interviews, and ensure compliance with labor laws.',
     80000,
     'KES',
-    'hr_officer.jpg',
     '2026-09-30',
     'Draft'
 ),
@@ -79,7 +77,6 @@ VALUES
     'Design and implement CI/CD pipelines, collaborate with developers, and ensure smooth deployment processes.',
     150000,
     'KES',
-    'devops_engineer.jpg',
     '2026-12-20',
     'Open'
 );

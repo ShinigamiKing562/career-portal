@@ -21,7 +21,6 @@ CREATE TABLE jobs (
     salary DECIMAL(10,2) NOT NULL,
     currency CHAR(3) DEFAULT 'KES' NOT NULL,
 
-    image_path VARCHAR(255) NOT NULL,
 
     deadline DATE NOT NULL,
 
