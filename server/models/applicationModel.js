@@ -22,7 +22,9 @@ function mapApplication(application) {
     graduation_year: application.graduation_year,
     supportingLinks: application.supporting_links,
     coverLetter: application.cover_letter,
-    resumeFilename: application.resume_filename,
+    resumeUrl: application.resume_filename
+      ? `${process.env.BASE_URL}/uploads/resumes/${application.resume_filename}`
+      : null,
     status: application.status,
     createdAt: application.created_at,
     updatedAt: application.updated_at,
@@ -107,7 +109,7 @@ export async function createApplication(application) {
     graduation_year,
     supportingLinks,
     coverLetter,
-    resumeFilename,
+    resumeUrl,
   } = application;
 
   const [result] = await pool.query(
@@ -132,7 +134,7 @@ export async function createApplication(application) {
         graduation_year,
         supporting_links,
         cover_letter,
-        resume_filename
+        resume_Url
       )
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `,
@@ -156,7 +158,7 @@ export async function createApplication(application) {
       graduation_year,
       supportingLinks ? JSON.stringify(supportingLinks) : null,
       coverLetter,
-      resumeFilename,
+      resumeUrl,
     ],
   );
 
