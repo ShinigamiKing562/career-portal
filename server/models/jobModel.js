@@ -12,7 +12,6 @@ function mapJob(job) {
     responsibilities: job.responsibilities,
     salary: job.salary,
     currency: job.currency,
-    imagePath: job.image_path,
     deadline: job.deadline,
     status: job.status,
     createdAt: job.created_at,
@@ -33,7 +32,6 @@ export async function createJob(job) {
     responsibilities,
     salary,
     currency = "KES",
-    imagePath,
     deadline,
     status = "Draft",
   } = job;
@@ -50,11 +48,10 @@ export async function createJob(job) {
         responsibilities,
         salary,
         currency,
-        image_path,
         deadline,
         status
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `,
     [
       title,
@@ -66,7 +63,6 @@ export async function createJob(job) {
       responsibilities,
       salary,
       currency,
-      imagePath,
       deadline,
       status,
     ],
@@ -206,7 +202,6 @@ export async function updateJob(id, updates) {
     responsibilities: "responsibilities",
     salary: "salary",
     currency: "currency",
-    imagePath: "image_path",
     deadline: "deadline",
     status: "status",
   };

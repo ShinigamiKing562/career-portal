@@ -36,23 +36,14 @@ export const getJobController = asyncHandler(async (req, res) => {
 
 // POST /api/jobs
 export const createJobController = asyncHandler(async (req, res) => {
-  const job = await createJob({
-    ...req.body,
-    imagePath: req.file?.filename ?? null,
-  });
+ const job = await createJob(req.body);
 
   sendSuccess(res, job, "Job created successfully", HTTP_STATUS.CREATED);
 });
 
 // PATCH /api/jobs/:jobId
 export const updateJobController = asyncHandler(async (req, res) => {
-  const job = await updateJob(req.params.jobId, {
-    ...req.body,
-    ...(req.file?.filename && {
-      imagePath: req.file.filename,
-    }),
-  });
-
+  const job = await updateJob(req.params.jobId, req.body);
   sendSuccess(res, job, "Job updated successfully");
 });
 

@@ -60,13 +60,6 @@ export const createJobValidation = [
     .isLength({ max: 10 })
     .withMessage("Currency must not exceed 10 characters"),
   
-  body("image")
-    .custom((value, { req }) => {
-      if (!req.file) {
-        throw new Error("Image is required");
-      }
-      return true;
-    }),
 
   body("deadline")
     .notEmpty()

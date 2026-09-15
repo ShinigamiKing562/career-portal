@@ -1,6 +1,5 @@
 import express from "express";
 import resumeUpload from "../middleware/resumeUpload.js";
-import jobImageUpload from "../middleware/jobImageUpload.js";
 import validate from "../middleware/validate.js";
 import authenticate from "../middleware/authenticate.js";
 import authorize from "../middleware/authorize.js";
@@ -29,7 +28,6 @@ router.get("/title/:title", getJobByTitleController);
 router.get("/:jobId", getJobController);
 router.post(
   "/",
-  jobImageUpload.single('image'),
   authenticate,
   authorize("admin"),
   createJobValidation,
@@ -39,7 +37,6 @@ router.post(
 
 router.patch(
   "/:jobId",
-  jobImageUpload.single('image'),
   authenticate,
   authorize("admin"),
   updateJobValidation,
