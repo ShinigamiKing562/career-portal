@@ -8,7 +8,6 @@ INSERT INTO jobs (
     responsibilities,
     salary,
     currency,
-    image_path,
     deadline,
     status
 )
@@ -23,7 +22,6 @@ VALUES
     'Design and implement RESTful APIs, collaborate with frontend developers, and optimize database queries.',
     120000,
     'KES',
-    'backend_developer.jpg',
     '2026-12-31',
     'Open'
 ),
@@ -37,7 +35,6 @@ VALUES
     'Design and implement modern React applications, collaborate with backend developers, and ensure responsive design.',
     110000,
     'KES',
-    'frontend_developer.jpg',
     '2026-11-30',
     'Open'
 ),
