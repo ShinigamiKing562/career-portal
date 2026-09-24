@@ -7,8 +7,18 @@ import {
   updateApplicationStatusController,
   deleteApplicationController,
 } from "../controllers/applicationsController.js";
+import cors from "cors";
 
 const router = express.Router();
+const app = express();
+
+app.use(
+  cors({
+    origin: "http://localhost:5000",
+    methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "Accept"],
+  }),
+);
 
 router.use(authenticate);
 router.use(authorize("admin"));

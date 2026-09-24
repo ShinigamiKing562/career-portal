@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import resumeUpload from "../middleware/resumeUpload.js";
 import validate from "../middleware/validate.js";
 import authenticate from "../middleware/authenticate.js";
@@ -21,7 +22,16 @@ import {
   createApplicationController,
 } from "../controllers/applicationsController.js";
 
+const app = express();
 const router = express.Router();
+
+app.use(
+  cors({
+    origin: "http://localhost:5000",
+    methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "Accept"],
+  }),
+);
 
 router.get("/", listJobsController);
 router.get("/title/:title", getJobByTitleController);
