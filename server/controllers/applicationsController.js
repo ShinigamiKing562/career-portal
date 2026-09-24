@@ -35,10 +35,40 @@ export const listJobApplicationsController = asyncHandler(async (req, res) => {
 
 // POST /api/jobs/:jobId/applications
 export const createApplicationController = asyncHandler(async (req, res) => {
+  const jobId = Number(req.params.jobId);
+
+  if (!Number.isInteger(jobId) || jobId <= 0) {
+    throw new ApiError(HTTP_STATUS.BAD_REQUEST, "Invalid job ID");
+  }
+
   const application = await submitApplication({
-    ...req.body,
-    jobId: req.params.jobId,
-    resumeUrl: req.file?.filename ?? null,
+    jobId,
+
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    phone: req.body.phone,
+    nationalId: req.body.nationalId,
+    gender: req.body.gender,
+    location: req.body.location,
+
+    skills: req.body.skills,
+
+    previousPosition: req.body.previousPosition,
+    previousWorkplace: req.body.previousWorkplace,
+    yearsOfExperience: Number(req.body.yearsOfExperience),
+    positionDescription: req.body.positionDescription,
+
+    highestEducation: req.body.highestEducation,
+    major: req.body.major,
+    educationInstitution: req.body.educationInstitution,
+    graduationYear: Number(req.body.graduationYear),
+
+    supportingLinks: req.body.supportingLinks,
+
+    coverLetter: req.body.coverLetter,
+
+    resumeFilename: req.file?.filename ?? null,
   });
 
   sendSuccess(

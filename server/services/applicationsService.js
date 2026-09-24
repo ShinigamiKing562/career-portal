@@ -27,7 +27,7 @@ const formatApplication = (application) => {
 
   return {
     ...application,
-    resumeUrl: application.resumeFilename
+    resume_filename: application.resumeFilename
       ? `/uploads/resumes/${application.resumeFilename}`
       : null,
   };
@@ -81,9 +81,7 @@ export async function submitApplication(application) {
     );
   }
 
-  const id = await createApplication(application);
-
-  return getApplication(id);
+  return createApplication(application);
 }
 
 export async function changeApplicationStatus(id, status) {
